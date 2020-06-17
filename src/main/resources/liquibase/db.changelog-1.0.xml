@@ -1,0 +1,127 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0" author="roman.surkov">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" type="VARCHAR(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="roman.surkov">
+        <createTable tableName="roles">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="roman.surkov">
+        <createTable tableName="user_roles">
+            <column name="user_id" type="BIGINT">
+            </column>
+            <column name="role_id" type="INT">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="roman.surkov">
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_roles_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="roman.surkov">
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_user_roles_role"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="roman.surkov">
+        <insert tableName="roles">
+            <column name="id" value="1">
+            </column>
+            <column name="name" value="ROLE_OWNER">
+            </column>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="id" value="2">
+            </column>
+            <column name="name" value="ROLE_ADMIN">
+            </column>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="id" value="3">
+            </column>
+            <column name="name" value="ROLE_USER">
+            </column>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="id" value="4">
+            </column>
+            <column name="name" value="ROLE_STATIST">
+            </column>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="id" value="5">
+            </column>
+            <column name="name" value="ROLE_OPERATOR">
+            </column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="roman.surkov">
+        <insert tableName="users">
+            <column name="id" value="1">
+            </column>
+            <column name="name" value="Vasiliy">
+            </column>
+            <column name="login" value="vasya2000">
+            </column>
+            <column name="password" value="Password1">
+            </column>
+        </insert>
+
+        <insert tableName="user_roles">
+            <column name="user_id" value="1">
+            </column>
+            <column name="role_id" value="1">
+            </column>
+        </insert>
+
+        <insert tableName="user_roles">
+            <column name="user_id" value="1">
+            </column>
+            <column name="role_id" value="2">
+            </column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
